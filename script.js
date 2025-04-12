@@ -1,5 +1,6 @@
 let playerScore = 0;
 let computerScore = 0;
+let roundCount = 0;
 
 function getComputerChoice(){
     return Math.floor(Math.random()*3)
@@ -28,8 +29,14 @@ hs = getHumanChoice()
 cs = getComputerChoice()
 
 
+
 if(hs === cs){
+    roundCount+=1;
+    
     console.log("Tie!")
+    if (roundCount>4){
+        gameOver();
+        }
     playRound();
 }else if(hs === 0){
     if(cs===1){
@@ -65,16 +72,33 @@ if(hs === cs){
     }
 }
 
-
+function gameOver(){
+if(playerScore>computerScore){
+    console.log("You Win!")
+}else if(computerScore>playerScore){
+    console.log("Computer Wins!")
+}else{
+    console.log("Tie Game!")
+}
+throw new Error();
+}
 }
 
 function compWins(){
 computerScore +=1
+roundCount+=1;
+if (roundCount>4){
+    gameOver();
+    }
 playRound()
 }
 
 function humanWins(){
 playerScore+=1
+roundCount+=1;
+if (roundCount>4){
+    gameOver();
+    }
 playRound()
 }
 
