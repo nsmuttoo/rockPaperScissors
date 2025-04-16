@@ -1,7 +1,11 @@
 let playerScore = 0;
 let computerScore = 0;
 let roundCount = 0;
+let hs = 0
 
+console.log("script")
+const round = document.querySelector("#round")
+const scoreing = document.querySelector("#score")
 function getComputerChoice(){
     return Math.floor(Math.random()*3)
 }
@@ -22,84 +26,117 @@ return null
 
 }
 
+const buttons = document.querySelectorAll("button")
+
+buttons.forEach((button) =>{
+
+    button.addEventListener("click", () =>{
+        console.log(button.id)
+
+        alert(button.id)
+    });
+});
+
+function turnOff(){
+    window.confirm("Game Over!")
+}
+
+function alert(play){
+    
+    console.log(play)
+    hs = play
+    playRound()
+}
+
+function updateRound(text){
+round.textContent = text
+
+}
+
+function updateScore(text){
+scoreing.textContent = text
+}
+
+
 function playRound(){
-console.log("You:" +playerScore +" Computer: " +computerScore);
 
-hs = getHumanChoice()
+
+
 cs = getComputerChoice()
+console.log("PR:" + hs +"  ->" + cs)
+updateScore("You:" +playerScore +" Computer: " +computerScore);
 
-
-
-if(hs === cs){
+if(hs == cs){
     roundCount+=1;
     
-    console.log("Tie!")
+    updateRound("Tie!")
     if (roundCount>4){
         gameOver();
         }
-    playRound();
-}else if(hs === 0){
-    if(cs===1){
-        console.log("Computer chose Paper")
-        console.log("Paper Beats Rock!")
+    
+}else if(hs == 0){
+    if(cs==1){
+        updateRound("Computer chose Paper: Paper Beats Rock!")
+        
         compWins();
-    }else if(cs === 2){
-        console.log("Computer chose Scissors")
-        console.log("Rock beats Scissors!")
+    }else if(cs == 2){
+        updateRound("Computer chose Scissors: Rock beats Scissors!")
+        
         humanWins();
     }
 
-}else if(hs === 1){
-    if(cs===0){
-        console.log("Computer chose Rock")
-        console.log("Paper Beats Rock!")
+}else if(hs == 1){
+    if(cs==0){
+        updateRound("Computer chose Rock: Paper Beats Rock!")
+       
         humanWins();
-    }else if(cs === 2){
-        console.log("Computer chose Scissors")
-        console.log("Scissors beats Paper!")
+    }else if(cs == 2){
+        updateRound("Computer chose Scissors: Scissors beats Paper!")
+        
         compWins();
     }
 
-}else if(hs === 2){
-    if(cs===1){
-        console.log("Computer chose Paper")
-        console.log("Scissors beats Paper!")
+}else if(hs == 2){
+    if(cs==1){
+        updateRound("Computer chose Paper: Scissors beats Paper!")
+        
         humanWins();
-    }else if(cs === 0){
-        console.log("Computer chose Rock")
-        console.log("Rock beats Scissors!")
+    }else if(cs == 0){
+        updateRound("Computer chose Rock: Rock beats Scissors!")
+        
         compWins();
     }
 }
-
+}
 function gameOver(){
 if(playerScore>computerScore){
-    console.log("You Win!")
+    updateScore("You Win the game!  "+playerScore+" : " + computerScore)
 }else if(computerScore>playerScore){
-    console.log("Computer Wins!")
+    updateScore("Computer Wins the game!  "+playerScore+" : " + computerScore )
 }else{
-    console.log("Tie Game!")
+    updateScore("Game ends in a Tie!  "+playerScore+" : " + computerScore)
 }
-throw new Error();
-}
+    turnOff()
+
 }
 
 function compWins(){
 computerScore +=1
 roundCount+=1;
+updateScore("You:" +playerScore +" Computer: " +computerScore);
 if (roundCount>4){
     gameOver();
     }
-playRound()
+
 }
 
 function humanWins(){
 playerScore+=1
 roundCount+=1;
+updateScore("You:" +playerScore +" Computer: " +computerScore);
 if (roundCount>4){
     gameOver();
     }
-playRound()
+
 }
 
-playRound();
